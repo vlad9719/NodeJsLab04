@@ -1,0 +1,391 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Spec for Contracts API",
+    "description": "Spec for Contracts API",
+    "termsOfService": "http://swagger.io/terms/"
+  },
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Healthcheck",
+      "description": "API for checking whether server is running"
+    },
+    {
+      "name": "Contract",
+      "description": "API for creating and deleting contracts between Renter and Stock"
+    },
+    {
+      "name": "Stocks",
+      "description": "API for getting stocks by renter ID"
+    },
+    {
+      "name": "Renters",
+      "description": "API for getting renters by stock ID"
+    },
+    {
+      "name": "Time Report",
+      "description": "API for getting average request time for 1000 GET request to ```api/contracts/{number}``` endpoint"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/healthcheck": {
+      "get": {
+        "tags": [
+          "Healthcheck"
+        ],
+        "description": "Endpoint for checking whether server is running",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Server is running properly",
+            "schema": {
+              "$ref": "#/definitions/healthcheck"
+            }
+          }
+        }
+      }
+    },
+    "/api/contract/{renterId}/{stockId}": {
+      "post": {
+        "tags": [
+          "Contract"
+        ],
+        "description": "Creates a new contract",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "renterId",
+            "in": "path",
+            "description": "Renter ID for contract",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "stockId",
+            "in": "path",
+            "description": "Stock ID for contract",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "rentalCost",
+            "in": "body",
+            "description": "Rental Cost for contract",
+            "required": true,
+            "example": {
+              "rentalCost": 2000
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Create contract response",
+            "schema": {
+              "$ref": "#/definitions/createContract"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Contract"
+        ],
+        "description": "Deletes contract",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "renterId",
+            "in": "path",
+            "description": "Renter ID for contract",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "stockId",
+            "in": "path",
+            "description": "Stock ID for contract",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "response",
+            "schema": {
+              "$ref": "#/definitions/deleteContract"
+            }
+          }
+        }
+      }
+    },
+    "/api/stocks/{renterId}": {
+      "get": {
+        "tags": [
+          "Stocks"
+        ],
+        "description": "Returns contracts with stocks and their total cost for particular renter",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "renterId",
+            "in": "path",
+            "description": "Renter ID for contract",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All contracts with stocks for a renter and their total rental cost",
+            "schema": {
+              "$ref": "#/definitions/stocks"
+            }
+          }
+        }
+      }
+    },
+    "/api/renters/{stockId}": {
+      "get": {
+        "tags": [
+          "Renters"
+        ],
+        "description": "Returns contracts with renters for a particular stock",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "stockId",
+            "in": "path",
+            "description": "Stock ID for contract",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All contracts with renters for a stock",
+            "schema": {
+              "$ref": "#/definitions/renters"
+            }
+          }
+        }
+      }
+    },
+    "/api/contracts/{number}": {
+      "get": {
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Returns N first contracts from database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "number",
+            "in": "path",
+            "description": "Number of records to retrieve from database",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "N records from database",
+            "schema": {
+              "$ref": "#/definitions/contracts"
+            }
+          }
+        }
+      }
+    },
+    "/api/time-report": {
+      "get": {
+        "tags": [
+          "Time Report"
+        ],
+        "description": "Returns average request time for 1000 GET requests to ```api/contracts/{number}``` endpoint",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Average GET request time in ms",
+            "schema": {
+              "$ref": "#/definitions/time-report"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "healthcheck": {
+      "properties": {
+        "message": {
+          "required": true,
+          "type": "string",
+          "example": "Server is running"
+        },
+        "serverStartedRunningAt": {
+          "required": true,
+          "type": "string",
+          "example": "28-4-2019"
+        },
+        "serverAlreadyRuns (ms)": {
+          "required": true,
+          "type": "number",
+          "example": 41234
+        }
+      }
+    },
+    "createContract": {
+      "properties": {
+        "data": {
+          "required": true,
+          "type": "object",
+          "example": {
+            "addedContract": {
+              "renterId": 12,
+              "stockId": 123,
+              "rentalCost": 5000
+            }
+          }
+        }
+      }
+    },
+    "deleteContract": {
+      "properties": {
+        "data": {
+          "required": true,
+          "type": "object",
+          "example": {
+            "removedContract": {
+              "renterId": 4000,
+              "stockId": 4000
+            }
+          }
+        }
+      }
+    },
+    "stocks": {
+      "properties": {
+        "data": {
+          "required": true,
+          "type": "array",
+          "example": [
+            {
+              "contracts": [
+                {
+                  "createdAt": "2019-05-24T21:00:00.000Z",
+                  "stockName": "Stock 5000",
+                  "rentalCost": 5611.72
+                },
+                {
+                  "createdAt": "2019-05-26T21:00:00.000Z",
+                  "stockName": "Stock 6000",
+                  "rentalCost": 1234
+                }
+              ]
+            },
+            {
+              "totalRentalCost": "6845.72"
+            }
+          ]
+        }
+      }
+    },
+    "renters": {
+      "properties": {
+        "data": {
+          "required": true,
+          "type": "array",
+          "example": [
+            {
+              "contracts": [
+                {
+                  "createdAt": "2019-05-24T21:00:00.000Z",
+                  "renterName": "Renter 5000",
+                  "rentalCost": 5611.72
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "contracts": {
+      "properties": {
+        "data": {
+          "required": true,
+          "type": "object",
+          "example": {
+            "result": [
+              {
+                "renter_id": 1,
+                "stock_id": 1,
+                "created_at": "2019-05-24T21:00:00.000Z",
+                "rental_cost": 5289.51
+              },
+              {
+                "renter_id": 2,
+                "stock_id": 2,
+                "created_at": "2019-05-24T21:00:00.000Z",
+                "rental_cost": 9793.45
+              },
+              {
+                "renter_id": 3,
+                "stock_id": 3,
+                "created_at": "2019-05-24T21:00:00.000Z",
+                "rental_cost": 8470.11
+              },
+              {
+                "renter_id": 4,
+                "stock_id": 4,
+                "created_at": "2019-05-24T21:00:00.000Z",
+                "rental_cost": 2791.01
+              },
+              {
+                "renter_id": 5,
+                "stock_id": 5,
+                "created_at": "2019-05-24T21:00:00.000Z",
+                "rental_cost": 6798.3
+              }
+            ]
+          }
+        }
+      }
+    },
+    "time-report": {
+      "properties": {
+        "data": {
+          "required": true,
+          "type": "object",
+          "example": {
+            "averageRequestTime (ms)": 76.262
+          }
+        }
+      }
+    }
+  }
+}

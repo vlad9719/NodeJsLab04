@@ -1,0 +1,35 @@
+{
+  "name": "task1",
+  "version": "1.0.0",
+  "description": "Contracts API using SQL",
+  "main": "index.ts",
+  "dependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/mysql": "^2.15.6",
+    "@types/node": "^12.0.2",
+    "axios": "^0.18.0",
+    "body-parser": "1.9.x",
+    "express": "^4.17.0",
+    "fs": "0.0.1-security",
+    "lodash": "^4.17.11",
+    "minimist": "*",
+    "mysql": "^2.17.1",
+    "mysql2": "^1.6.5",
+    "swagger-node-express": "^2.1.3",
+    "swagger-ui-express": "^4.0.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vlad9719/NodeJsLab03.git"
+  },
+  "author": "Uladzislau Dauhashei",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vlad9719/NodeJsLab03/issues"
+  },
+  "homepage": "https://github.com/vlad9719/NodeJsLab03#readme"
+}

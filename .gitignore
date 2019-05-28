@@ -1,0 +1,7 @@
+.idea
+
+task1/.idea
+task2/.idea
+
+task1/node_modules
+task2/node_modules
