@@ -23,12 +23,17 @@ cd task1
 cd task2
 ```
 
-Step 4. Run the server
+Step 4. Install npm packages:
+```$xslt
+npm install
+```
+
+Step 5. Run the server
 ```$xslt
 ts-node index.ts
 ```
 
-Step 5. View Swagger docs in browser by entering into address bar the following URL:
+Step 6. View Swagger docs in browser by entering into address bar the following URL:
 ```$xslt
 http://localhost:8080/api-docs
 ```
