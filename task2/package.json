@@ -23,7 +23,7 @@
     "minimist": "*",
     "mysql": "^2.17.1",
     "mysql2": "^1.6.5",
-    "sequelize": "^5.8.6",
+    "sequelize": "^5.15.1",
     "swagger-node-express": "^2.1.3"
   }
 }
