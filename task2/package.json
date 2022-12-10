@@ -19,7 +19,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "1.9.x",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "minimist": "*",
     "mysql": "^2.17.1",
     "mysql2": "^1.6.5",
